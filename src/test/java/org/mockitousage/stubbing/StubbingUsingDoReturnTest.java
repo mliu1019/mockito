@@ -98,7 +98,7 @@ public class StubbingUsingDoReturnTest extends TestBase {
     @Test
     public void should_scream_when_not_a_mock_passed() throws Exception {
         try {
-            doReturn("foo").when("foo").toString();
+            doReturn("foo").when("foo");
             fail();
         } catch (Exception e) {
             assertThat(e).hasMessageContaining("Argument passed to when() is not a mock");
@@ -108,7 +108,7 @@ public class StubbingUsingDoReturnTest extends TestBase {
     @Test
     public void should_scream_when_null_passed() throws Exception {
         try {
-            doReturn("foo").when((Object) null).toString();
+            doReturn("foo").when(null).toString();
             fail();
         } catch (Exception e) {
             assertThat(e).hasMessageContaining("Argument passed to when() is null");
@@ -133,10 +133,10 @@ public class StubbingUsingDoReturnTest extends TestBase {
     @Test
     public void should_allow_consecutive_return_values() {
         doReturn("foo", "bar")
-                .doThrow(new RuntimeException())
-                .doReturn(430L, new byte[0], "qix")
-                .when(mock)
-                .objectReturningMethodNoArgs();
+            .doThrow(new RuntimeException())
+            .doReturn(430L, new byte[0], "qix")
+            .when(mock)
+            .objectReturningMethodNoArgs();
 
         Assertions.assertThat(mock.objectReturningMethodNoArgs()).isEqualTo("foo");
         Assertions.assertThat(mock.objectReturningMethodNoArgs()).isEqualTo("bar");
@@ -148,7 +148,6 @@ public class StubbingUsingDoReturnTest extends TestBase {
 
         Assertions.assertThat(mock.objectReturningMethodNoArgs()).isEqualTo(430L);
         Assertions.assertThat(mock.objectReturningMethodNoArgs()).isEqualTo(new byte[0]);
-        Assertions.assertThat(mock.objectReturningMethodNoArgs()).isEqualTo("qix");
         Assertions.assertThat(mock.objectReturningMethodNoArgs()).isEqualTo("qix");
     }
 
@@ -190,13 +189,13 @@ public class StubbingUsingDoReturnTest extends TestBase {
     @Test
     public void should_stub_with_generic_answer() {
         doAnswer(
-                        new Answer<Object>() {
-                            public Object answer(InvocationOnMock invocation) throws Throwable {
-                                return "foo";
-                            }
-                        })
-                .when(mock)
-                .simpleMethod();
+            new Answer<Object>() {
+                public Object answer(InvocationOnMock invocation) throws Throwable {
+                    return "foo";
+                }
+            })
+            .when(mock)
+            .simpleMethod();
 
         Assertions.assertThat(mock.simpleMethod()).isEqualTo("foo");
     }
@@ -245,10 +244,10 @@ public class StubbingUsingDoReturnTest extends TestBase {
             fail();
         } catch (Exception e) {
             assertThat(e)
-                    .hasMessageContaining(
-                            "String cannot be returned by booleanObjectReturningMethod()"
-                                    + "\n"
-                                    + "booleanObjectReturningMethod() should return Boolean");
+                .hasMessageContaining(
+                    "String cannot be returned by booleanObjectReturningMethod()"
+                        + "\n"
+                        + "booleanObjectReturningMethod() should return Boolean");
         }
     }
 

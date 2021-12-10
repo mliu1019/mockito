@@ -5,8 +5,7 @@
 package org.mockitousage.stubbing;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -33,8 +32,8 @@ public class BasicStubbingTest extends TestBase {
 
         assertEquals(200, mock.objectReturningMethod(200));
         assertEquals(100, mock.objectReturningMethod(666));
-        assertEquals(
-                "default behavior should return null", null, mock.objectReturningMethod("blah"));
+        assertNull(
+            "default behavior should return null", mock.objectReturningMethod("blah"));
     }
 
     @Test
@@ -131,10 +130,9 @@ public class BasicStubbingTest extends TestBase {
 
         assertEquals(200, localMock.objectReturningMethod(200));
         assertEquals(100, localMock.objectReturningMethod(666));
-        assertEquals(
-                "default behavior should return null",
-                null,
-                localMock.objectReturningMethod("blah"));
+        assertNull(
+            "default behavior should return null",
+            localMock.objectReturningMethod("blah"));
 
         try {
             verify(localMock, atLeastOnce()).objectReturningMethod(eq(200));
@@ -153,10 +151,10 @@ public class BasicStubbingTest extends TestBase {
             fail();
         } catch (CannotVerifyStubOnlyMock e) {
             assertEquals(
-                    "\n"
-                            + "Argument \"iMethods\" passed to verify is a stubOnly() mock which cannot be verified.\n"
-                            + "If you intend to verify invocations on this mock, don't use stubOnly() in its MockSettings.",
-                    e.getMessage());
+                "\n"
+                    + "Argument \"iMethods\" passed to verify is a stubOnly() mock which cannot be verified.\n"
+                    + "If you intend to verify invocations on this mock, don't use stubOnly() in its MockSettings.",
+                e.getMessage());
         }
     }
 
